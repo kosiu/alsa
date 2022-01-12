@@ -453,7 +453,6 @@ mailing list, too.
     selection.connect('changed', self.selection_changed_cb)
     
     treeview.expand_all()
-    print("JKK end treeview")
     return treeview
 
   def __create_text(self, callback):

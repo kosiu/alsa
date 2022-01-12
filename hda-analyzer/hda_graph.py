@@ -568,7 +568,10 @@ class CodecGraphLayout(Gtk.Layout):
     # background
     cr = self.get_bin_window().cairo_create()
     cr.set_source_rgb(1.0, 1.0, 1.0)
-    cr.rectangle(*event.clip_extents())
+    x,y,dx,dy=event.clip_extents()
+    x=x+widget.get_hadjustment().get_value()
+    y=y+widget.get_vadjustment().get_value()
+    cr.rectangle(x,y,dx,dy)
     cr.clip()
     cr.paint()
 

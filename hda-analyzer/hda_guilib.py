@@ -250,7 +250,7 @@ class NodeGui(Gtk.ScrolledWindow):
       column = Gtk.TreeViewColumn("Active", renderer, active=0)
       treeview.append_column(column)
       renderer = Gtk.CellRendererText()
-      column = Gtk.TreeViewColumn("Source Node", renderer, text=1, editable=1)
+      column = Gtk.TreeViewColumn("Source Node", renderer, text=1)
       treeview.append_column(column)
       sw.add(treeview)
     return frame
