@@ -657,7 +657,7 @@ class CodecGraphLayout(Gtk.Layout):
 
     if self.popup_win:
       self.popup_win.destroy()
-    self.popup_win = Gtk.Window(Gtk.WindowType.POPUP)
+    self.popup_win = Gtk.Window.new(Gtk.WindowType.POPUP)
     label = Gtk.Label()
     label.modify_font(get_fixed_font())
     label.set_text(self.popup)
@@ -666,18 +666,14 @@ class CodecGraphLayout(Gtk.Layout):
     self.popup_win.show_all()
     popup_width, popup_height = self.popup_win.get_size()
 
-    #rootwin = self.get_screen().get_root_window()
-    #x, y, mods = rootwin.get_pointer()
+    pos_x = event.x_root + 10
+    if pos_x + popup_width > screen_width:
+      pos_x = pos_x - popup_width - 20
+    pos_y = event.y_root + 10
+    if pos_y + popup_height > screen_height:
+      pos_y = pos_y - popup_height - 20
 
-    pos_x = screen_width - popup_width
-    if pos_x < 0:
-      pos_x = 0
-    pos_y = screen_height - popup_height
-    if pos_y < 0:
-      pox_y = 0
-
-    self.popup_win.move(int(pos_x), int(pos_y))
-    #self.popup_win.show_all()
+    self.popup_win.move(pos_x, pos_y)
 
   def mouse_move(self, widget, event):
     oldpopup = self.popup
@@ -909,19 +905,19 @@ class CodecGraph(Gtk.Window):
     statusbar = Gtk.Statusbar()
     self.layout = CodecGraphLayout(None, None, codec, self.get_title(), statusbar)
     table.attach(self.layout, 0, 1, 0, 1, Gtk.AttachOptions.FILL|Gtk.AttachOptions.EXPAND,
-                 Gtk.AttachOptions.FILL|Gtk.AttachOptions.EXPAND, 0, 0)
+                 Gtk.AttachOptions.FILL|Gtk.AttachOptions.EXPAND)
     vScrollbar = Gtk.VScrollbar(None)
     table.attach(vScrollbar, 1, 2, 0, 1, Gtk.AttachOptions.FILL|Gtk.AttachOptions.SHRINK,
-                 Gtk.AttachOptions.FILL|Gtk.AttachOptions.SHRINK, 0, 0)
+                 Gtk.AttachOptions.FILL|Gtk.AttachOptions.SHRINK)
     hScrollbar = Gtk.HScrollbar(None)
     table.attach(hScrollbar, 0, 1, 1, 2, Gtk.AttachOptions.FILL|Gtk.AttachOptions.SHRINK,
-                 Gtk.AttachOptions.FILL|Gtk.AttachOptions.SHRINK, 0, 0)	
+                 Gtk.AttachOptions.FILL|Gtk.AttachOptions.SHRINK)	
     vAdjust = self.layout.get_vadjustment()
     vScrollbar.set_adjustment(vAdjust)
     hAdjust = self.layout.get_hadjustment()
     hScrollbar.set_adjustment(hAdjust)
     table.attach(statusbar, 0, 2, 2, 3, Gtk.AttachOptions.FILL|Gtk.AttachOptions.SHRINK,
-                 Gtk.AttachOptions.FILL|Gtk.AttachOptions.SHRINK, 0, 0)
+                 Gtk.AttachOptions.FILL|Gtk.AttachOptions.SHRINK)
     self.show_all()
     GRAPH_WINDOWS[codec] = self
     TRACKER.add(self)
