@@ -871,7 +871,7 @@ class CodecGraphLayout(Gtk.Layout):
         i.show()
         m.append(i)
     if m:
-      m.popup(None, None, None, event.button, event.time, None)
+      m.popup(None, None, None, None, event.button, event.time)
     return False 
     
   def button_release(self, widget, event):
